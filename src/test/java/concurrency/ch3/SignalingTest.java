@@ -1,4 +1,4 @@
-package concurrency;
+package concurrency.ch3;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
@@ -10,10 +10,10 @@ import org.junit.Test;
  * 
  * Use a semaphore to print A1 before B1.
  * 
- * @author jesg
+ * @author Jason Gowan
  *
  */
-public class SemiphoreTest {
+public class SignalingTest {
 	/**
 	 * Initialize the semaphore with no permits.
 	 * 
