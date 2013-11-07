@@ -17,7 +17,7 @@ import org.junit.Test;
  * @author Jason Gowan
  *
  */
-public class QueueTest {
+public class NonExclusiveQueueTest {
 	private final int n = 100;
 	private final Semaphore leaderQueue = new Semaphore(0);
 	private final Semaphore followerQueue = new Semaphore(0);
