@@ -15,7 +15,6 @@ public class WriterPriorityReaderWriterLightSwitchTest {
 	private String mutableData = "Initial Value";
 	private final LightSwitch readSwitch = new LightSwitch();
 	private final LightSwitch writeSwitch = new LightSwitch();
-	private final Semaphore mutex = new Semaphore(1);
 	private final Semaphore noReaders = new Semaphore(1);
 	private final Semaphore noWriters = new Semaphore(1);
 	private final CountDownLatch latch = new CountDownLatch(31);
