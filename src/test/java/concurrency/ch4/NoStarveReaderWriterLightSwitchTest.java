@@ -11,11 +11,11 @@ import java.util.concurrent.TimeUnit;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ReaderWriterLightSwitchTest {
+public class NoStarveReaderWriterLightSwitchTest {
 	private String mutableData = "Initial Value";
-	private final LightSwitch lightSwitch = new LightSwitch();
+	private final LightSwitch readSwitch = new LightSwitch();
 	private final Semaphore roomEmpty = new Semaphore(1);
-	private final Semaphore turnstile = new Semaphore(0);
+	private final Semaphore turnstile = new Semaphore(1);
 	private final CountDownLatch latch = new CountDownLatch(31);
 	
 	private Executor executor = Executors
@@ -36,11 +36,14 @@ public class ReaderWriterLightSwitchTest {
 	private class Reader implements Runnable {
 
 		public void run() {
-			lightSwitch.lock(roomEmpty);
+			turnstile.acquireUninterruptibly();
+			turnstile.release();
+			
+			readSwitch.lock(roomEmpty);
 			
 			System.out.println(mutableData);
 			
-			lightSwitch.unlock(roomEmpty);
+			readSwitch.unlock(roomEmpty);
 			
 			latch.countDown();
 		}
@@ -58,9 +61,11 @@ public class ReaderWriterLightSwitchTest {
 			
 			turnstile.acquireUninterruptibly();
 			roomEmpty.acquireUninterruptibly();
+			
 			mutableData = "Writer " + id;
-			roomEmpty.release();
+			
 			turnstile.release();
+			roomEmpty.release();
 			
 			latch.countDown();
 		}
