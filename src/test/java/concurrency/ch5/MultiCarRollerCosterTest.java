@@ -32,7 +32,6 @@ public class MultiCarRollerCosterTest {
 	private final Semaphore[] unloadingArea = new Semaphore[m];
 	
 	private final CountDownLatch latch = new CountDownLatch(n + 1);
-	private final BlockingQueue<Class<Void>> queue = new ArrayBlockingQueue<Class<Void>>(m);
 
 	private static int next(int i){
 		return (i + 1) % m;
